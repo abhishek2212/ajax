@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax 1 - Text File</title>
+</head>
+<body>
+    <button id="button">Get text file</button>
+    <br><br>
+    <div id="text"></div>
+    
+    <script>
+        //Create event listner
+        document.getElementById("button").addEventListener('click',loadText);
+        function loadText(){
+            //console.log('btton clicked')
+            //create XHR objects
+            var xhr=new XMLHttpRequest();
+            //OPen -type,url/file,asysnchronous
+            xhr.open('GET','example.txt',true);
+
+            console.log('READYSTATE: ',xhr.readyState);
+
+            //OPTIONAL-used for loaders
+            xhr.onprogress=function(){
+                console.log('READYSTATE: ', xhr.readyState);
+            }
+
+            xhr.onload=function(){
+                console.log('READYSTATE: ', xhr.readyState);
+                if(this.status==200){
+                    //console.log(this.responseText);
+                    document.getElementById('text').innerHTML=this.responseText;
+                }else if(this.status==404){
+                    document.getElementById('text').innerHTML = 'Not Found';
+                }
+            }
+
+            //error Handler
+            xhr.onerror=function(){
+                console.log('Request Error');
+            }
+
+            // xhr.onreadystatechange=function(){
+            //     console.log('READYSTATE: ', xhr.readyState);
+            //     if(this.readyState== 4 && this.status==200){
+            //         //console.log(this.responseText);
+
+            //     }
+            // }
+
+            //Sends request
+            xhr.send();
+        }
+        //readyState values
+        //0:request not initialized
+        //1:server connection is stablished
+        //2:request received
+        //3:processing request
+        //4:request finished and response is ready
+
+        //HTTP Statuses
+        //200:"Ok"
+        //403:"forbidden"
+        //404:"Not found"
+    </script>
+</body>
+</html>
